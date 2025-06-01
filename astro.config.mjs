@@ -5,6 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: 'https://andresalmeida.github.io',
   base: '/maths-program',
+  output: 'static',
   vite: {
     plugins: [tailwindcss()],
   },

@@ -33,7 +33,7 @@ const allQuestions = [...questionsData.exercises, ...questionsData.problems];
     <div class="max-w-7xl mx-auto">
       <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-2 md:gap-3">
         {allQuestions.map((question, index) => {
-          const quizUrl = `/quiz/${index}`;
+          const quizUrl = `${import.meta.env.BASE_URL}quiz/${index}`;
           return (
             <a 
               href={quizUrl}

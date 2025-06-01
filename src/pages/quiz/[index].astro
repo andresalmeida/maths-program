@@ -41,7 +41,7 @@ const debugInfo = {
     <!-- Botón de volver (inicialmente oculto) -->
     <div id="back-button" class="fixed top-4 left-4 z-50 hidden">
       <a 
-        href="/" 
+        href={import.meta.env.BASE_URL} 
         class="flex items-center space-x-2 bg-white/90 backdrop-blur-lg rounded-xl px-4 py-3 text-[#009DD0] hover:text-[#7ED349] hover:bg-white transition-all duration-300 glow-effect border-2 border-[#009DD0]/20 hover:border-[#7ED349]/40 shadow-lg transform hover:scale-105"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,7 +111,7 @@ const debugInfo = {
           
           <div id="failure-actions" class="hidden space-y-4">
             <a 
-              href="/"
+              href={import.meta.env.BASE_URL}
               class="inline-block bg-gradient-to-r from-red-500 to-red-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-xl"
             >
               🔄 Reiniciar
@@ -135,9 +135,9 @@ const debugInfo = {
 
   // Sistema de sonidos
   const sounds = {
-    timer: new Audio('/sounds/timer.mp3'),
-    correct: new Audio('/sounds/correct.mp3'),
-    incorrect: new Audio('/sounds/incorrect.mp3')
+    timer: new Audio(`${import.meta.env.BASE_URL}sounds/timer.mp3`),
+    correct: new Audio(`${import.meta.env.BASE_URL}sounds/correct.mp3`),
+    incorrect: new Audio(`${import.meta.env.BASE_URL}sounds/incorrect.mp3`)
   };
 
   // Función para reproducir sonido
@@ -344,7 +344,7 @@ const debugInfo = {
       nextExerciseBtn.addEventListener('click', () => {
         const nextExerciseIndex = getNextRandomExercise();
         if (nextExerciseIndex !== null) {
-          window.location.href = `/quiz/${nextExerciseIndex}`;
+          window.location.href = `${import.meta.env.BASE_URL}quiz/${nextExerciseIndex}`;
         } else {
           // Modal personalizado en lugar de alert
           showCompletionModal();
@@ -381,7 +381,7 @@ const debugInfo = {
           <!-- Botón -->
           <button 
             class="w-full px-4 py-3 bg-gradient-to-r from-[#7ED349] to-[#009DD0] text-white rounded-xl hover:scale-105 transition-all duration-300 font-semibold shadow-lg"
-            onclick="window.location.href = '/'"
+            onclick="window.location.href = '${import.meta.env.BASE_URL}'"
           >
             Volver al inicio
           </button>
