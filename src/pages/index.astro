@@ -1,0 +1,236 @@
+---
+import Layout from '../layouts/Layout.astro';
+import questionsData from '../data/questions.json';
+
+// Combinar todos los ejercicios y problemas
+const allQuestions = [...questionsData.exercises, ...questionsData.problems];
+---
+
+<Layout>
+  <div class="min-h-screen bg-gradient-to-br from-white via-[#009DD0]/15 via-[#7ED349]/10 to-white p-4">
+    
+    <!-- Header fijo -->
+    <div class="text-center mb-8 sticky top-0 bg-white/90 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-[#009DD0]/20 z-10">
+      <div class="text-4xl md:text-6xl mb-3 animate-bounce">🧮</div>
+      <h1 class="text-2xl md:text-4xl font-bold text-[#009DD0] mb-2">
+        Concurso de Matemáticas
+      </h1>
+      <p class="text-sm md:text-lg text-[#7ED349] font-semibold mb-2">
+        ¡Resuelve todos los ejercicios! Selecciona cualquiera para empezar
+      </p>
+      <div class="flex items-center justify-center space-x-4 text-xs md:text-sm text-[#009DD0]/70">
+        <span>📊 <span id="completed-count">0</span>/{allQuestions.length} completados</span>
+        <button 
+          id="reset-progress" 
+          class="bg-gradient-to-r from-[#7ED349] to-[#009DD0] text-white px-4 py-2 rounded-full hover:scale-105 transition-all duration-300 shadow-md"
+        >
+          🔄 Reiniciar Todo
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid de todos los ejercicios y problemas -->
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-2 md:gap-3">
+        {allQuestions.map((question, index) => {
+          const quizUrl = `/quiz/${index}`;
+          return (
+            <a 
+              href={quizUrl}
+              data-question-index={index}
+              data-question-id={question.id}
+              data-question-type={question.type}
+              class="question-card group relative bg-gradient-to-br from-[#009DD0]/10 to-[#7ED349]/10 backdrop-blur-sm rounded-xl p-3 md:p-4 text-[#009DD0] hover:from-[#009DD0]/20 hover:to-[#7ED349]/20 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl min-h-[80px] md:min-h-[100px] flex flex-col items-center justify-center border-2 border-[#009DD0]/20 hover:border-[#7ED349]/40"
+            >
+              <div class="text-lg md:text-2xl font-bold mb-1 group-hover:text-[#7ED349] transition-colors duration-300">
+                {index + 1}
+              </div>
+              <div class="text-xs text-[#009DD0]/80 font-medium text-center leading-tight">
+                {question.type === 'exercise' ? '🔢' : '📝'}
+              </div>
+              <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-[#7ED349]/10 to-[#009DD0]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <!-- Overlay para ejercicios completados -->
+              <div class="completion-overlay absolute inset-0 bg-gray-400/50 rounded-xl hidden items-center justify-center">
+                <div class="text-white text-xl">✓</div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- Info footer -->
+    <div class="text-center mt-8 text-xs md:text-sm text-[#009DD0]/60">
+      <p>🔢 = Ejercicio matemático | 📝 = Problema de texto</p>
+      <p>Tienes 15 segundos para cada pregunta</p>
+    </div>
+
+  </div>
+
+  <!-- Modal de confirmación para reinicio -->
+  <div id="reset-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 transition-all duration-300" id="modal-content">
+      <div class="text-center">
+        <!-- Icono -->
+        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-[#009DD0] to-[#7ED349] rounded-full flex items-center justify-center">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+        </div>
+        
+        <!-- Título -->
+        <h3 class="text-xl md:text-2xl font-bold text-[#009DD0] mb-2">
+          ¿Reiniciar progreso?
+        </h3>
+        
+        <!-- Mensaje -->
+        <p class="text-[#009DD0]/70 mb-6 text-sm md:text-base">
+          Esto eliminará todo tu progreso actual. Tendrás que resolver todos los ejercicios nuevamente.
+        </p>
+        
+        <!-- Botones -->
+        <div class="flex space-x-3">
+          <button 
+            id="cancel-reset"
+            class="flex-1 px-4 py-3 text-[#009DD0] border-2 border-[#009DD0]/20 rounded-xl hover:bg-[#009DD0]/5 transition-all duration-300 font-semibold"
+          >
+            Cancelar
+          </button>
+          <button 
+            id="confirm-reset"
+            class="flex-1 px-4 py-3 bg-gradient-to-r from-[#7ED349] to-[#009DD0] text-white rounded-xl hover:scale-105 transition-all duration-300 font-semibold shadow-lg"
+          >
+            Sí, reiniciar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sistema de progreso local
+    const STORAGE_KEY = 'math-progress';
+    
+    // Cargar progreso guardado
+    function loadProgress() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+    
+    // Guardar progreso
+    function saveProgress(completedIds: string[]) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(completedIds));
+    }
+    
+    // Actualizar contador y UI
+    function updateUI() {
+      const completed = loadProgress();
+      const completedCount = document.getElementById('completed-count');
+      const questionCards = document.querySelectorAll('.question-card');
+      
+      if (completedCount) {
+        completedCount.textContent = completed.length;
+      }
+      
+      // Marcar ejercicios completados
+      questionCards.forEach((card) => {
+        const cardElement = card as HTMLElement;
+        const questionIndex = cardElement.getAttribute('data-question-index');
+        const overlay = cardElement.querySelector('.completion-overlay');
+        
+        if (questionIndex && completed.includes(questionIndex)) {
+          overlay?.classList.remove('hidden');
+          overlay?.classList.add('flex');
+          cardElement.classList.add('opacity-60');
+        } else {
+          overlay?.classList.add('hidden');
+          overlay?.classList.remove('flex');
+          cardElement.classList.remove('opacity-60');
+        }
+      });
+    }
+    
+    // Mostrar modal de reinicio
+    function showResetModal() {
+      const modal = document.getElementById('reset-modal');
+      const modalContent = document.getElementById('modal-content');
+      
+      if (modal && modalContent) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        // Animación de entrada
+        setTimeout(() => {
+          modalContent.classList.remove('scale-95');
+          modalContent.classList.add('scale-100');
+        }, 10);
+      }
+    }
+    
+    // Ocultar modal de reinicio
+    function hideResetModal() {
+      const modal = document.getElementById('reset-modal');
+      const modalContent = document.getElementById('modal-content');
+      
+      if (modal && modalContent) {
+        // Animación de salida
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+        
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 300);
+      }
+    }
+    
+    // Reiniciar progreso
+    function resetProgress() {
+      localStorage.removeItem(STORAGE_KEY);
+      updateUI();
+      hideResetModal();
+    }
+    
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+      
+      const resetButton = document.getElementById('reset-progress');
+      const cancelButton = document.getElementById('cancel-reset');
+      const confirmButton = document.getElementById('confirm-reset');
+      const modal = document.getElementById('reset-modal');
+      
+      // Mostrar modal al hacer click en reiniciar
+      if (resetButton) {
+        resetButton.addEventListener('click', showResetModal);
+      }
+      
+      // Cancelar reinicio
+      if (cancelButton) {
+        cancelButton.addEventListener('click', hideResetModal);
+      }
+      
+      // Confirmar reinicio
+      if (confirmButton) {
+        confirmButton.addEventListener('click', resetProgress);
+      }
+      
+      // Cerrar modal al hacer click fuera de él
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            hideResetModal();
+          }
+        });
+      }
+    });
+    
+    // Escuchar cuando se completa un ejercicio
+    window.addEventListener('storage', (e) => {
+      if (e.key === STORAGE_KEY) {
+        updateUI();
+      }
+    });
+  </script>
+</Layout>

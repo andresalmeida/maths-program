@@ -1,0 +1,424 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import questionsData from '../../data/questions.json';
+import '../../styles/quiz.css';
+
+// Función requerida para rutas dinámicas
+export async function getStaticPaths() {
+  // Combinar ejercicios y problemas dentro de la función
+  const allQuestions = [...questionsData.exercises, ...questionsData.problems];
+  
+  return allQuestions.map((question, index) => ({
+    params: { index: index.toString() },
+    props: { question, questionIndex: index, totalQuestions: allQuestions.length }
+  }));
+}
+
+// Obtener índice y pregunta de los props
+const { question, questionIndex, totalQuestions } = Astro.props;
+const { index } = Astro.params;
+
+// Debug info
+const debugInfo = {
+  index,
+  questionIndex,
+  totalQuestions,
+  url: Astro.url.href
+};
+---
+
+<Layout>
+  <div class="min-h-screen bg-gradient-to-br from-white via-[#009DD0]/15 via-[#7ED349]/10 to-white flex flex-col items-center justify-center p-4">
+    
+    <!-- Timer en la esquina superior derecha -->
+    <div class="fixed top-4 right-4 z-50">
+      <div class="bg-white/90 backdrop-blur-lg rounded-2xl p-4 text-[#009DD0] text-center min-w-[100px] glow-effect border-2 border-[#009DD0]/20 shadow-lg">
+        <div class="text-sm font-semibold mb-1">Tiempo</div>
+        <div id="timer" class="text-3xl font-bold transition-all duration-300">15</div>
+      </div>
+    </div>
+
+    <!-- Botón de volver (inicialmente oculto) -->
+    <div id="back-button" class="fixed top-4 left-4 z-50 hidden">
+      <a 
+        href="/" 
+        class="flex items-center space-x-2 bg-white/90 backdrop-blur-lg rounded-xl px-4 py-3 text-[#009DD0] hover:text-[#7ED349] hover:bg-white transition-all duration-300 glow-effect border-2 border-[#009DD0]/20 hover:border-[#7ED349]/40 shadow-lg transform hover:scale-105"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        <span class="text-sm font-semibold">Regresar</span>
+      </a>
+    </div>
+
+    <!-- Contenedor principal de la flashcard -->
+    <div class="w-full max-w-4xl mx-auto">
+      
+      <!-- Flashcard -->
+      <div id="flashcard" class="bg-white/95 backdrop-blur-lg rounded-3xl p-8 md:p-12 text-[#009DD0] shadow-2xl min-h-[400px] flex flex-col items-center justify-center text-center relative flashcard-enter border-2 border-[#009DD0]/20">
+        
+        <!-- Indicador de tipo de pregunta -->
+        <div class="absolute top-4 left-4 bg-gradient-to-r from-[#009DD0] to-[#7ED349] rounded-full px-4 py-2 text-sm font-semibold text-white shadow-lg">
+          {question.type === 'exercise' ? '🔢 Ejercicio' : '📝 Problema'} #{questionIndex + 1}
+        </div>
+
+        <!-- Pregunta -->
+        <div id="question-container" class="w-full">
+          <div class="text-2xl md:text-4xl font-bold mb-8 leading-relaxed text-[#009DD0]" id="question-text">
+            {question.question}
+          </div>
+          <div class="text-lg md:text-xl text-[#7ED349] font-medium">
+            ¡Resuelve antes de que se acabe el tiempo!
+          </div>
+          
+          <!-- Formulario para respuesta del usuario -->
+          <div class="mt-8">
+            <input 
+              type="text" 
+              id="user-answer" 
+              placeholder="Escribe tu respuesta..." 
+              class="w-full max-w-md px-4 py-3 text-xl text-center border-2 border-[#009DD0]/30 rounded-xl focus:border-[#7ED349] focus:outline-none bg-white/80 backdrop-blur-sm"
+              autocomplete="off"
+            />
+            <button 
+              id="submit-answer" 
+              class="mt-4 bg-gradient-to-r from-[#7ED349] to-[#009DD0] text-white font-bold py-3 px-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg"
+            >
+              ✓ Enviar Respuesta
+            </button>
+          </div>
+        </div>
+
+        <!-- Resultado (inicialmente oculto) -->
+        <div id="result-container" class="hidden w-full">
+          <div id="result-message" class="text-xl md:text-2xl font-medium mb-4">
+            <!-- Mensaje de éxito o error -->
+          </div>
+          <div class="text-lg md:text-xl text-[#009DD0]/80 mb-4">La respuesta correcta es:</div>
+          <div class="text-3xl md:text-5xl font-bold text-[#7ED349] mb-8 answer-reveal drop-shadow-lg">
+            {question.answer}
+          </div>
+          
+          <!-- Botones de acción -->
+          <div id="success-actions" class="hidden space-y-4">
+            <button 
+              id="next-exercise-btn"
+              class="bg-gradient-to-r from-[#7ED349] to-[#009DD0] text-white font-bold py-4 px-8 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-xl heartbeat border-2 border-white/20"
+            >
+              ➡️ Continúa al siguiente ejercicio
+            </button>
+          </div>
+          
+          <div id="failure-actions" class="hidden space-y-4">
+            <a 
+              href="/"
+              class="inline-block bg-gradient-to-r from-red-500 to-red-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-xl"
+            >
+              🔄 Reiniciar
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ question, questionIndex, totalQuestions }}>
+  let timeLeft = 15;
+  let timerInterval = null;
+  let isAnswerSubmitted = false;
+  
+  const STORAGE_KEY = 'math-progress';
+  const currentIndex = questionIndex;
+
+  // Sistema de sonidos
+  const sounds = {
+    timer: new Audio('/sounds/timer.mp3'),
+    correct: new Audio('/sounds/correct.mp3'),
+    incorrect: new Audio('/sounds/incorrect.mp3')
+  };
+
+  // Función para reproducir sonido
+  function playSound(soundName) {
+    try {
+      const sound = sounds[soundName];
+      if (sound) {
+        sound.currentTime = 0; // Reiniciar el sonido desde el inicio
+        sound.volume = 0.7; // Volumen al 70%
+        sound.play().catch(console.error); // Reproducir con manejo de errores
+      }
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  }
+
+  // Elementos del DOM
+  const timerElement = document.getElementById('timer');
+  const questionContainer = document.getElementById('question-container');
+  const resultContainer = document.getElementById('result-container');
+  const userAnswerInput = document.getElementById('user-answer');
+  const submitButton = document.getElementById('submit-answer');
+  const nextExerciseBtn = document.getElementById('next-exercise-btn');
+  const backButton = document.getElementById('back-button');
+  const resultMessage = document.getElementById('result-message');
+  const successActions = document.getElementById('success-actions');
+  const failureActions = document.getElementById('failure-actions');
+
+  // Función para normalizar respuestas
+  function normalizeAnswer(answer) {
+    return answer.toString().toLowerCase().trim()
+      .replace(/\s+/g, ' ')
+      .replace(/[$]/g, ''); // Quitamos $ pero mantenemos las comas por ahora
+  }
+
+  // Función para normalizar números decimales
+  function normalizeDecimal(numberStr) {
+    // Convertir punto a coma para unificar formato
+    let normalized = numberStr.replace('.', ',');
+    
+    // Si termina en ,X (un solo dígito después de la coma), agregar un 0
+    if (normalized.match(/,\d$/)) {
+      normalized += '0';
+    }
+    
+    return normalized;
+  }
+
+  // Función para extraer solo el número de una respuesta
+  function extractNumber(answer) {
+    // Extrae solo números y comas/puntos decimales
+    const numberMatch = answer.match(/[\d,\.]+/);
+    return numberMatch ? normalizeDecimal(numberMatch[0]) : answer;
+  }
+
+  // Función para verificar respuesta mejorada
+  function checkAnswer(userAnswer, correctAnswer) {
+    const normalizedUser = normalizeAnswer(userAnswer);
+    const normalizedCorrect = normalizeAnswer(correctAnswer);
+    
+    // Comparación exacta primero
+    if (normalizedUser === normalizedCorrect) {
+      return true;
+    }
+    
+    // Si no coincide exactamente, intentar comparar solo los números
+    // Esto permite que "30" sea válido para "30 cm", "$20" para "$20,00", etc.
+    const userNumber = extractNumber(normalizedUser);
+    const correctNumber = extractNumber(normalizedCorrect);
+    
+    if (userNumber === correctNumber) {
+      return true;
+    }
+    
+    // También comparar sin comas decimales (,00)
+    const userNumberClean = userNumber.replace(',00', '');
+    const correctNumberClean = correctNumber.replace(',00', '');
+    
+    if (userNumberClean === correctNumberClean) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  // Función para obtener ejercicio aleatorio no completado
+  function getNextRandomExercise() {
+    const completed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const available = [];
+    
+    for (let i = 0; i < totalQuestions; i++) {
+      if (!completed.includes(i.toString())) {
+        available.push(i);
+      }
+    }
+    
+    if (available.length === 0) return null;
+    
+    const randomIndex = Math.floor(Math.random() * available.length);
+    return available[randomIndex];
+  }
+
+  // Función para marcar como completado
+  function markAsCompleted() {
+    const completed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    
+    if (!completed.includes(currentIndex.toString())) {
+      completed.push(currentIndex.toString());
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
+    }
+  }
+
+  // Función para iniciar el timer
+  function startTimer() {
+    timeLeft = 15;
+    timerElement.textContent = timeLeft;
+    timerElement.classList.remove('timer-danger');
+    
+    // Reproducir sonido del timer al iniciar
+    playSound('timer');
+    
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timerElement.textContent = timeLeft;
+      
+      if (timeLeft <= 5) {
+        timerElement.classList.add('timer-danger');
+      }
+      
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        if (!isAnswerSubmitted) {
+          submitAnswer();
+        }
+      }
+    }, 1000);
+  }
+
+  // Función para enviar respuesta
+  function submitAnswer() {
+    if (isAnswerSubmitted) return;
+    
+    isAnswerSubmitted = true;
+    clearInterval(timerInterval);
+    
+    // Pausar el sonido del timer cuando se envía respuesta
+    try {
+      sounds.timer.pause();
+      sounds.timer.currentTime = 0;
+    } catch (error) {
+      console.error('Error stopping timer sound:', error);
+    }
+    
+    const userAnswer = userAnswerInput.value.trim();
+    const isCorrect = checkAnswer(userAnswer, question.answer);
+    
+    // Ocultar formulario
+    questionContainer.style.display = 'none';
+    
+    // Mostrar resultado
+    resultContainer.style.display = 'block';
+    resultContainer.classList.remove('hidden');
+    
+    if (isCorrect) {
+      // Reproducir sonido de respuesta correcta
+      playSound('correct');
+      
+      markAsCompleted();
+      resultMessage.textContent = '¡Correcto! 🎉';
+      resultMessage.className = 'text-xl md:text-2xl font-medium mb-4 text-[#7ED349]';
+      successActions.classList.remove('hidden');
+      failureActions.classList.add('hidden');
+    } else {
+      // Reproducir sonido de respuesta incorrecta
+      playSound('incorrect');
+      
+      resultMessage.textContent = '¡Incorrecto! 😞';
+      resultMessage.className = 'text-xl md:text-2xl font-medium mb-4 text-red-500';
+      successActions.classList.add('hidden');
+      failureActions.classList.remove('hidden');
+    }
+    
+    // Mostrar botón de regreso
+    setTimeout(() => {
+      backButton.style.display = 'block';
+      backButton.classList.remove('hidden');
+    }, 1000);
+  }
+
+  // Event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    startTimer();
+    userAnswerInput.focus();
+    
+    submitButton.addEventListener('click', submitAnswer);
+    
+    userAnswerInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        submitAnswer();
+      }
+    });
+    
+    if (nextExerciseBtn) {
+      nextExerciseBtn.addEventListener('click', () => {
+        const nextExerciseIndex = getNextRandomExercise();
+        if (nextExerciseIndex !== null) {
+          window.location.href = `/quiz/${nextExerciseIndex}`;
+        } else {
+          // Modal personalizado en lugar de alert
+          showCompletionModal();
+        }
+      });
+    }
+  });
+
+  // Función para mostrar modal de finalización
+  function showCompletionModal() {
+    // Crear modal dinámicamente
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+    modal.innerHTML = `
+      <div class="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 transition-all duration-300">
+        <div class="text-center">
+          <!-- Icono de éxito -->
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-[#7ED349] to-[#009DD0] rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          
+          <!-- Título -->
+          <h3 class="text-xl md:text-2xl font-bold text-[#009DD0] mb-2">
+            ¡Felicidades! 🎉
+          </h3>
+          
+          <!-- Mensaje -->
+          <p class="text-[#009DD0]/70 mb-6 text-sm md:text-base">
+            Has completado todos los ejercicios del concurso de matemáticas. ¡Excelente trabajo!
+          </p>
+          
+          <!-- Botón -->
+          <button 
+            class="w-full px-4 py-3 bg-gradient-to-r from-[#7ED349] to-[#009DD0] text-white rounded-xl hover:scale-105 transition-all duration-300 font-semibold shadow-lg"
+            onclick="window.location.href = '/'"
+          >
+            Volver al inicio
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Animación de entrada
+    setTimeout(() => {
+      const modalContent = modal.querySelector('div > div');
+      if (modalContent) {
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+      }
+    }, 10);
+  }
+</script>
+
+<style>
+  #flashcard {
+    position: relative;
+  }
+  
+  .hidden {
+    display: none !important;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+</style> 

@@ -1,0 +1,70 @@
+/* Estilos específicos para la página de quiz */
+
+/* Animación para el timer cuando está en rojo */
+.timer-danger {
+  color: #7ED349 !important;
+  animation: pulse-red 0.5s infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 0.8; 
+  }
+}
+
+/* Animación para la flashcard */
+.flashcard-enter {
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Animación para mostrar respuesta */
+.answer-reveal {
+  animation: zoomIn 0.5s ease-out;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Efecto de brillo para elementos importantes */
+.glow-effect {
+  box-shadow: 0 0 15px rgba(0, 157, 208, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 25px rgba(126, 211, 73, 0.4);
+}
+
+/* Animación de latido para el botón principal */
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}

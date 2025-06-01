@@ -1,0 +1,798 @@
+{
+    "exercises": [
+      {
+        "id": 1,
+        "type": "exercise",
+        "question": "8 × 2 + 6 - 13 =",
+        "answer": "9"
+      },
+      {
+        "id": 2,
+        "type": "exercise",
+        "question": "10 ÷ 2 × 5 + 2 - 7 =",
+        "answer": "20"
+      },
+      {
+        "id": 3,
+        "type": "exercise",
+        "question": "√36 × 9 + 6 – 8 =",
+        "answer": "52"
+      },
+      {
+        "id": 4,
+        "type": "exercise",
+        "question": "(6 + 3) × 2 ÷ 9 + 8 =",
+        "answer": "10"
+      },
+      {
+        "id": 5,
+        "type": "exercise",
+        "question": "9 × 3 - 7 + 2 =",
+        "answer": "22"
+      },
+      {
+        "id": 6,
+        "type": "exercise",
+        "question": "(10 - 4) ÷ 2 × 7 - 11 =",
+        "answer": "10"
+      },
+      {
+        "id": 7,
+        "type": "exercise",
+        "question": "15 ÷ 3 × 9 + 5 - 10 =",
+        "answer": "40"
+      },
+      {
+        "id": 8,
+        "type": "exercise",
+        "question": "√49 × 2 + 6 - 10 =",
+        "answer": "10"
+      },
+      {
+        "id": 9,
+        "type": "exercise",
+        "question": "(12 + 6) ÷ 3 × 5 - 10 =",
+        "answer": "20"
+      },
+      {
+        "id": 10,
+        "type": "exercise",
+        "question": "5 × 7 - 4 + 9 =",
+        "answer": "40"
+      },
+      {
+        "id": 11,
+        "type": "exercise",
+        "question": "20 ÷ 5 × 2 + 4 - 2 =",
+        "answer": "10"
+      },
+      {
+        "id": 12,
+        "type": "exercise",
+        "question": "(9 + 1) × 3 + 10 – 20 =",
+        "answer": "20"
+      },
+      {
+        "id": 13,
+        "type": "exercise",
+        "question": "√81 × 2 + 2 – 15 =",
+        "answer": "5"
+      },
+      {
+        "id": 14,
+        "type": "exercise",
+        "question": "30 ÷ 5 × 4 + 6 – 10 =",
+        "answer": "20"
+      },
+      {
+        "id": 15,
+        "type": "exercise",
+        "question": "(14 - 6) × 2 + 4 =",
+        "answer": "20"
+      },
+      {
+        "id": 16,
+        "type": "exercise",
+        "question": "6 × 3 ÷ 9 + 8 - 5 =",
+        "answer": "5"
+      },
+      {
+        "id": 17,
+        "type": "exercise",
+        "question": "100 ÷ 10 × 2 + 5 – 10 =",
+        "answer": "15"
+      },
+      {
+        "id": 18,
+        "type": "exercise",
+        "question": "(18 + 6) ÷ 3 + 1 - 2 =",
+        "answer": "7"
+      },
+      {
+        "id": 19,
+        "type": "exercise",
+        "question": "√64 × 4 + 8 – 20 =",
+        "answer": "20"
+      },
+      {
+        "id": 20,
+        "type": "exercise",
+        "question": "9 × 6 - 9 + 5 =",
+        "answer": "50"
+      },
+      {
+        "id": 21,
+        "type": "exercise",
+        "question": "24 ÷ 6 × 3 + 8 =",
+        "answer": "20"
+      },
+      {
+        "id": 22,
+        "type": "exercise",
+        "question": "(7 + 3) × 2 + 20 – 10 =",
+        "answer": "30"
+      },
+      {
+        "id": 23,
+        "type": "exercise",
+        "question": "√100 × 2 - 10 + 8 =",
+        "answer": "18"
+      },
+      {
+        "id": 24,
+        "type": "exercise",
+        "question": "48 ÷ 8 × 5 – 10 =",
+        "answer": "20"
+      },
+      {
+        "id": 25,
+        "type": "exercise",
+        "question": "5 × 4 ÷ 2 + 4 – 3 =",
+        "answer": "11"
+      },
+      {
+        "id": 26,
+        "type": "exercise",
+        "question": "(10 + 2) ÷ 2 + 13 – 9 =",
+        "answer": "10"
+      },
+      {
+        "id": 27,
+        "type": "exercise",
+        "question": "16 ÷ 4 × 2 + 13 – 1 =",
+        "answer": "20"
+      },
+      {
+        "id": 28,
+        "type": "exercise",
+        "question": "√121 × 5 + 5 – 30 =",
+        "answer": "30"
+      },
+      {
+        "id": 29,
+        "type": "exercise",
+        "question": "20 ÷ 4 × 6 - 15 =",
+        "answer": "15"
+      },
+      {
+        "id": 30,
+        "type": "exercise",
+        "question": "(5 + 3) × (2 + 1) - 9 =",
+        "answer": "15"
+      },
+      {
+        "id": 31,
+        "type": "exercise",
+        "question": "25 ÷ 5 × 3 + 9 – 4 =",
+        "answer": "20"
+      },
+      {
+        "id": 32,
+        "type": "exercise",
+        "question": "6 × 4 + 7 - 1 =",
+        "answer": "30"
+      },
+      {
+        "id": 33,
+        "type": "exercise",
+        "question": "(9 - 3) × 4 + 6 =",
+        "answer": "30"
+      },
+      {
+        "id": 34,
+        "type": "exercise",
+        "question": "√9 × 5 + 7 – 12 =",
+        "answer": "10"
+      },
+      {
+        "id": 35,
+        "type": "exercise",
+        "question": "30 ÷ 6 × 2 + 3 =",
+        "answer": "13"
+      },
+      {
+        "id": 36,
+        "type": "exercise",
+        "question": "(16 - 4) ÷ 2 + 6 =",
+        "answer": "12"
+      },
+      {
+        "id": 37,
+        "type": "exercise",
+        "question": "12 × 2 - 8 + 4 =",
+        "answer": "20"
+      },
+      {
+        "id": 38,
+        "type": "exercise",
+        "question": "√144 × 1 + 9 – 11 =",
+        "answer": "10"
+      },
+      {
+        "id": 39,
+        "type": "exercise",
+        "question": "(11 + 5) ÷ (3 + 5) =",
+        "answer": "2"
+      },
+      {
+        "id": 40,
+        "type": "exercise",
+        "question": "18 ÷ 3 × 2 + 8 =",
+        "answer": "20"
+      },
+      {
+        "id": 41,
+        "type": "exercise",
+        "question": "5 × (3 + 2) - 7 =",
+        "answer": "18"
+      },
+      {
+        "id": 42,
+        "type": "exercise",
+        "question": "(25 - 10) ÷ 5 + 6 =",
+        "answer": "9"
+      },
+      {
+        "id": 43,
+        "type": "exercise",
+        "question": "√16 × 3 + 5 – 7 =",
+        "answer": "10"
+      },
+      {
+        "id": 44,
+        "type": "exercise",
+        "question": "7 × 2 - 6 + 9 =",
+        "answer": "17"
+      },
+      {
+        "id": 45,
+        "type": "exercise",
+        "question": "(6 + 4) × 3 - 8 =",
+        "answer": "22"
+      },
+      {
+        "id": 46,
+        "type": "exercise",
+        "question": "10 ÷ 5 × 8 – 4 =",
+        "answer": "12"
+      },
+      {
+        "id": 47,
+        "type": "exercise",
+        "question": "√25 × √36 + 10 =",
+        "answer": "40"
+      },
+      {
+        "id": 48,
+        "type": "exercise",
+        "question": "6 × (3 + 2) + 4 =",
+        "answer": "34"
+      },
+      {
+        "id": 49,
+        "type": "exercise",
+        "question": "(8 × 2) - 5 + 7 =",
+        "answer": "18"
+      },
+      {
+        "id": 50,
+        "type": "exercise",
+        "question": "12 ÷ (2 + 2) + 9 =",
+        "answer": "12"
+      },
+      {
+        "id": 51,
+        "type": "exercise",
+        "question": "4,5 × 10 + 4 – 2 =",
+        "answer": "47"
+      },
+      {
+        "id": 52,
+        "type": "exercise",
+        "question": "(6 + 2) × 3 − 12 + 6 =",
+        "answer": "18"
+      },
+      {
+        "id": 53,
+        "type": "exercise",
+        "question": "√49 × 2 ÷ 7 + 3 =",
+        "answer": "5"
+      },
+      {
+        "id": 54,
+        "type": "exercise",
+        "question": "25 ÷ 5 + 2³ - 6 =",
+        "answer": "7"
+      },
+      {
+        "id": 55,
+        "type": "exercise",
+        "question": "√64 × 2 + 10 – 6 =",
+        "answer": "20"
+      },
+      {
+        "id": 56,
+        "type": "exercise",
+        "question": "8 × 2 - 6 + 13 =",
+        "answer": "23"
+      },
+      {
+        "id": 57,
+        "type": "exercise",
+        "question": "5² ÷ 5 + 10 - 2 =",
+        "answer": "13"
+      },
+      {
+        "id": 58,
+        "type": "exercise",
+        "question": "12 ÷ 3 × 2 + 6 - 2 =",
+        "answer": "12"
+      },
+      {
+        "id": 59,
+        "type": "exercise",
+        "question": "64 ÷ 8 × 2 - 6 + 10 =",
+        "answer": "20"
+      },
+      {
+        "id": 60,
+        "type": "exercise",
+        "question": "18 ÷ 3 × 5 – 10 + 5 =",
+        "answer": "25"
+      },
+      {
+        "id": 61,
+        "type": "exercise",
+        "question": "√100 × 2 + 30 - 10 =",
+        "answer": "40"
+      },
+      {
+        "id": 62,
+        "type": "exercise",
+        "question": "16 ÷ 4 × 3 + 8 - 10 =",
+        "answer": "10"
+      },
+      {
+        "id": 63,
+        "type": "exercise",
+        "question": "30 ÷ 6 × 2 + 10 – 5 =",
+        "answer": "15"
+      },
+      {
+        "id": 64,
+        "type": "exercise",
+        "question": "6² ÷ 9 × 5 – 8 + 3 =",
+        "answer": "15"
+      },
+      {
+        "id": 65,
+        "type": "exercise",
+        "question": "8 × 3 ÷ 4 + 5 - 2 =",
+        "answer": "9"
+      },
+      {
+        "id": 66,
+        "type": "exercise",
+        "question": "√81 ÷ 3 × 4 + 6 - 3 =",
+        "answer": "15"
+      },
+      {
+        "id": 67,
+        "type": "exercise",
+        "question": "3² + √64 - 10 + 3 =",
+        "answer": "10"
+      },
+      {
+        "id": 68,
+        "type": "exercise",
+        "question": "5² ÷ 5 × 4 – 3 + 8 =",
+        "answer": "25"
+      },
+      {
+        "id": 69,
+        "type": "exercise",
+        "question": "36 ÷ 6 × 2² + 6 - 10 =",
+        "answer": "20"
+      },
+      {
+        "id": 70,
+        "type": "exercise",
+        "question": "√49 ÷ 7 × 10 – 5 + 2 =",
+        "answer": "7"
+      },
+      {
+        "id": 71,
+        "type": "exercise",
+        "question": "18 ÷ 6 × √9 + 11 =",
+        "answer": "20"
+      },
+      {
+        "id": 72,
+        "type": "exercise",
+        "question": "4² + √81 - 10 =",
+        "answer": "15"
+      },
+      {
+        "id": 73,
+        "type": "exercise",
+        "question": "√64 ÷ 2 × 5 + 4 - 3 =",
+        "answer": "21"
+      },
+      {
+        "id": 74,
+        "type": "exercise",
+        "question": "7² ÷ 7 × 5 – 10 + 3 =",
+        "answer": "28"
+      },
+      {
+        "id": 75,
+        "type": "exercise",
+        "question": "18 ÷ 6 × 4 + 8 - 5 =",
+        "answer": "15"
+      },
+      {
+        "id": 76,
+        "type": "exercise",
+        "question": "3,2 × 10 – 2 + 5 =",
+        "answer": "35"
+      },
+      {
+        "id": 77,
+        "type": "exercise",
+        "question": "5,4 × 10 – 4 + 50 =",
+        "answer": "100"
+      },
+      {
+        "id": 78,
+        "type": "exercise",
+        "question": "7,5 × 10 – 5 + 30 =",
+        "answer": "100"
+      },
+      {
+        "id": 79,
+        "type": "exercise",
+        "question": "2,1 × 10 ÷ 7 + 7 =",
+        "answer": "10"
+      },
+      {
+        "id": 80,
+        "type": "exercise",
+        "question": "3,2 × 10 ÷ 8 + 16 =",
+        "answer": "20"
+      }
+    ],
+    "problems": [
+      {
+        "id": 1,
+        "type": "problem",
+        "question": "El triple de 6 más el doble de 2",
+        "answer": "22"
+      },
+      {
+        "id": 2,
+        "type": "problem",
+        "question": "Si una manzana cuesta $0,40, ¿cuánto valen 5 manzanas?",
+        "answer": "$2,00"
+      },
+      {
+        "id": 3,
+        "type": "problem",
+        "question": "Un cuaderno cuesta $1,25. ¿Cuánto cuestan 4 cuadernos?",
+        "answer": "$5,00"
+      },
+      {
+        "id": 4,
+        "type": "problem",
+        "question": "Si un bus lleva 40 personas, ¿cuántas llevan 5 buses iguales?",
+        "answer": "200 personas"
+      },
+      {
+        "id": 5,
+        "type": "problem",
+        "question": "María tiene 72 caramelos y los reparte entre 4 amigos. ¿Cuántos recibe cada uno?",
+        "answer": "18 caramelos cada uno"
+      },
+      {
+        "id": 6,
+        "type": "problem",
+        "question": "La cuarta parte de 100 es:",
+        "answer": "25"
+      },
+      {
+        "id": 7,
+        "type": "problem",
+        "question": "Si un kilo de arroz cuesta $1,80, ¿cuánto valen 3 kilos?",
+        "answer": "$5,40"
+      },
+      {
+        "id": 8,
+        "type": "problem",
+        "question": "Juan compra 3 camisetas de $7,50 cada una. ¿Cuánto paga en total?",
+        "answer": "$22,50"
+      },
+      {
+        "id": 9,
+        "type": "problem",
+        "question": "El cuádruple de 3 más 5 es:",
+        "answer": "17"
+      },
+      {
+        "id": 10,
+        "type": "problem",
+        "question": "Si una botella de jugo cuesta $2,50, ¿cuánto valen 6 botellas?",
+        "answer": "$15,00"
+      },
+      {
+        "id": 11,
+        "type": "problem",
+        "question": "Un libro vale $18. ¿Cuánto pagaré por 4 libros iguales?",
+        "answer": "$72,00"
+      },
+      {
+        "id": 12,
+        "type": "problem",
+        "question": "Si tengo $50 y gasto $17, ¿cuánto me queda?",
+        "answer": "$33,00"
+      },
+      {
+        "id": 13,
+        "type": "problem",
+        "question": "El doble de 9 menos el doble de 5 es:",
+        "answer": "8"
+      },
+      {
+        "id": 14,
+        "type": "problem",
+        "question": "Si 3 lápices cuestan $1,20, ¿cuánto cuestan 9 lápices?",
+        "answer": "$3,60"
+      },
+      {
+        "id": 15,
+        "type": "problem",
+        "question": "Andrea compra 4 chocolates a $0,75 cada uno. ¿Cuánto gasta?",
+        "answer": "$3,00"
+      },
+      {
+        "id": 16,
+        "type": "problem",
+        "question": "El quíntuple de 2 más la mitad de 10 es:",
+        "answer": "15"
+      },
+      {
+        "id": 17,
+        "type": "problem",
+        "question": "Un saco de harina pesa 25 kg. ¿Cuánto pesan 6 sacos?",
+        "answer": "150 kg"
+      },
+      {
+        "id": 18,
+        "type": "problem",
+        "question": "Si una entrada al cine cuesta $3,75, ¿cuánto costarán 4 entradas?",
+        "answer": "$15,00"
+      },
+      {
+        "id": 19,
+        "type": "problem",
+        "question": "La mitad de 36 más 2 es:",
+        "answer": "20"
+      },
+      {
+        "id": 20,
+        "type": "problem",
+        "question": "Luis tiene 45 caramelos y los reparte entre 5 amigos. ¿Cuántos recibe cada uno?",
+        "answer": "9"
+      },
+      {
+        "id": 21,
+        "type": "problem",
+        "question": "Un helado cuesta $1,10. ¿Cuánto valen 7 helados?",
+        "answer": "$7,70"
+      },
+      {
+        "id": 22,
+        "type": "problem",
+        "question": "El doble de 15 menos la mitad de 8 es:",
+        "answer": "26"
+      },
+      {
+        "id": 23,
+        "type": "problem",
+        "question": "Si un balón cuesta $9, ¿cuánto valen 12 balones?",
+        "answer": "$108,00"
+      },
+      {
+        "id": 24,
+        "type": "problem",
+        "question": "Una caja trae 24 galletas. ¿Cuántas galletas hay en 5 cajas?",
+        "answer": "120"
+      },
+      {
+        "id": 25,
+        "type": "problem",
+        "question": "Si tengo $50 y compro 4 cuadernos de $5, ¿cuánto me queda?",
+        "answer": "$30,00"
+      },
+      {
+        "id": 26,
+        "type": "problem",
+        "question": "En una clase de 30 estudiantes, las 2/5 partes son niñas. ¿Cuántas niñas hay en la clase?",
+        "answer": "12 niñas"
+      },
+      {
+        "id": 27,
+        "type": "problem",
+        "question": "Un cuadrado mide de lado 12 cm, ¿cuál será su perímetro?",
+        "answer": "48 cm"
+      },
+      {
+        "id": 28,
+        "type": "problem",
+        "question": "Un cuadrado que tiene de perímetro 36 cm, ¿cuál será el valor de su lado?",
+        "answer": "9 cm"
+      },
+      {
+        "id": 29,
+        "type": "problem",
+        "question": "Un rectángulo tiene de perímetro 54 cm, si el lado de la base mide 9cm ¿cuál será el valor de su altura?",
+        "answer": "18 cm"
+      },
+      {
+        "id": 30,
+        "type": "problem",
+        "question": "Si el radio de la circunferencia mide 4,3 cm, ¿su diámetro mide?",
+        "answer": "8,6 cm"
+      },
+      {
+        "id": 31,
+        "type": "problem",
+        "question": "El diámetro de una circunferencia mide 13 cm; ¿su radio mide?",
+        "answer": "6,5 cm"
+      },
+      {
+        "id": 32,
+        "type": "problem",
+        "question": "Un celular tiene un costo de $240, se aplica el 25% de descuento ¿cuál será el valor del descuento?",
+        "answer": "$60,00"
+      },
+      {
+        "id": 33,
+        "type": "problem",
+        "question": "En una división el dividendo es 72 y el cociente es 9, ¿cuál es su divisor?",
+        "answer": "8"
+      },
+      {
+        "id": 34,
+        "type": "problem",
+        "question": "En una biblioteca hay 5 estantes y en cada estante, 5 libros. Si cada libro tiene 5 capítulos, ¿cuántos capítulos de libros hay en total en los 5 estantes?",
+        "answer": "125"
+      },
+      {
+        "id": 35,
+        "type": "problem",
+        "question": "Si a = 9 y b = 7, ¿cuánto equivale a × b - 3?",
+        "answer": "60"
+      },
+      {
+        "id": 36,
+        "type": "problem",
+        "question": "Un terreno de 120 m² se divide en partes iguales para 4 personas. ¿Cuántos metros cuadrados le corresponden a cada una?",
+        "answer": "30 m²"
+      },
+      {
+        "id": 37,
+        "type": "problem",
+        "question": "Si 6 cuadernos cuestan $9, ¿cuánto costarán 12 cuadernos?",
+        "answer": "$18,00"
+      },
+      {
+        "id": 38,
+        "type": "problem",
+        "question": "En una pecera hay 20 peces de los cuales los 2/5 son pez payaso. ¿Cuántos peces de este tipo hay en la pecera?",
+        "answer": "8 pez payaso"
+      },
+      {
+        "id": 39,
+        "type": "problem",
+        "question": "Si utilizamos 1/3 del día para dormir. ¿Cuántas horas destinamos para esta actividad?",
+        "answer": "8 horas"
+      },
+      {
+        "id": 40,
+        "type": "problem",
+        "question": "¿El quíntuple de 2 más el triple de 3 es?",
+        "answer": "19"
+      },
+      {
+        "id": 41,
+        "type": "problem",
+        "question": "Si tengo $20 y compro 6 legos de $3, ¿cuánto me queda?",
+        "answer": "$2,00"
+      },
+      {
+        "id": 42,
+        "type": "problem",
+        "question": "Tienes un billete de $10. Compras 2 cuadernos de $2,50 cada uno. ¿Cuánto dinero te deben devolver?",
+        "answer": "$5,00"
+      },
+      {
+        "id": 43,
+        "type": "problem",
+        "question": "Un pastel se divide en 8 partes iguales. Si Juan se come 3 partes, ¿qué fracción del pastel queda?",
+        "answer": "5/8"
+      },
+      {
+        "id": 44,
+        "type": "problem",
+        "question": "Si un tren viaja a una velocidad constante de 60 km/h, ¿cuánto tiempo tardará en recorrer 180 km?",
+        "answer": "3 horas"
+      },
+      {
+        "id": 45,
+        "type": "problem",
+        "question": "Si un triángulo tiene un perímetro de 24 cm y dos de sus lados miden 8 cm y 7 cm, ¿cuánto mide el tercer lado?",
+        "answer": "9 cm"
+      },
+      {
+        "id": 46,
+        "type": "problem",
+        "question": "Si un auto recorre 240 km en 4 horas, ¿cuál es su velocidad promedio?",
+        "answer": "60 km/h"
+      },
+      {
+        "id": 47,
+        "type": "problem",
+        "question": "Si un triángulo tiene lados de 6 cm, 8 cm y 10 cm, ¿cuál es su perímetro?",
+        "answer": "24 cm"
+      },
+      {
+        "id": 48,
+        "type": "problem",
+        "question": "Si un triángulo tiene lados de 5 cm, 12 cm y 13 cm, ¿cuál es su perímetro?",
+        "answer": "30 cm"
+      },
+      {
+        "id": 49,
+        "type": "problem",
+        "question": "Si un triángulo tiene de base 8 cm y de altura 7 cm, ¿cuál es su área?",
+        "answer": "28 cm²"
+      },
+      {
+        "id": 50,
+        "type": "problem",
+        "question": "Si un rectángulo tiene de base 11 cm y de altura 9 cm, ¿cuál es su área?",
+        "answer": "99 cm²"
+      },
+      {
+        "id": 51,
+        "type": "problem",
+        "question": "Si un cuadrado tiene de lado 9 cm, ¿cuál es su área?",
+        "answer": "81 cm²"
+      },
+      {
+        "id": 52,
+        "type": "problem",
+        "question": "Si tengo los siguientes datos: 8, 7, 9, 6, 5 ¿cuál es su media aritmética?",
+        "answer": "7"
+      }
+    ]
+  }

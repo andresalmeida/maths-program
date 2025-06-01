@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+import questions from '../data/questions.json';
+---
+
+<Layout>
+  <div class="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-teal-500 p-4">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+        🧮 Concurso de Matemáticas 🧮
+      </h1>
+      <p class="text-xl text-white/90 font-semibold">
+        ¡Selecciona una caja y ponte a prueba!
+      </p>
+    </div>
+
+    <!-- Contest Grid -->
+    <div class="container mx-auto max-w-6xl">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8">
+        {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
+          <div 
+            class="math-box relative group cursor-pointer transform transition-all duration-300 hover:scale-110 hover:rotate-3"
+            data-box-number={num}
+          >
+            <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 text-center border-4 border-yellow-300 relative overflow-hidden">
+              <!-- Sparkle Animation Background -->
+              <div class="absolute inset-0 bg-gradient-to-r from-yellow-200/30 to-pink-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <!-- Box Number -->
+              <div class="relative z-10">
+                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                  <span class="text-2xl md:text-3xl font-bold text-white">{num}</span>
+                </div>
+                <p class="text-lg font-bold text-gray-700 group-hover:text-purple-600 transition-colors">
+                  ¡Tócame!
+                </p>
+              </div>
+              
+              <!-- Hover Effect -->
+              <div class="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-bounce"></div>
+              <div class="absolute -bottom-1 -left-1 w-4 h-4 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Modal for Question/Answer -->
+    <div id="questionModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden relative">
+        <!-- Close Button -->
+        <button id="closeModal" class="absolute top-4 right-4 z-10 w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors">
+          ✕
+        </button>
+        
+        <!-- Question Phase -->
+        <div id="questionPhase" class="p-8 text-center">
+          <div class="mb-6">
+            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center mb-4">
+              <span id="currentBoxNumber" class="text-3xl font-bold text-white">1</span>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">¡Resuelve este problema!</h2>
+          </div>
+          
+          <div class="bg-gray-50 rounded-2xl p-6 mb-6">
+            <p id="questionText" class="text-xl md:text-2xl font-semibold text-gray-800 leading-relaxed"></p>
+          </div>
+          
+          <!-- Timer -->
+          <div class="mb-6">
+            <div class="text-lg font-bold text-gray-600 mb-2">Tiempo restante:</div>
+            <div class="relative w-32 h-32 mx-auto">
+              <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" stroke="#e5e7eb" stroke-width="8" fill="none"></circle>
+                <circle 
+                  id="timerCircle"
+                  cx="50" 
+                  cy="50" 
+                  r="45" 
+                  stroke="#ef4444" 
+                  stroke-width="8" 
+                  fill="none"
+                  stroke-dasharray="283"
+                  stroke-dashoffset="0"
+                  class="transition-all duration-1000 ease-linear"
+                ></circle>
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span id="timerText" class="text-3xl font-bold text-red-500">10</span>
+              </div>
+            </div>
+          </div>
+          
+          <div id="timeWarning" class="hidden">
+            <div class="text-2xl font-bold text-red-600 animate-pulse mb-4">
+              ⏰ ¡EL TIEMPO SE ACABA! ⏰
+            </div>
+          </div>
+        </div>
+        
+        <!-- Answer Phase -->
+        <div id="answerPhase" class="hidden p-8 text-center">
+          <div class="mb-6">
+            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full flex items-center justify-center mb-4">
+              <span class="text-3xl">🎉</span>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">¡Respuesta!</h2>
+          </div>
+          
+          <div class="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-6 mb-6">
+            <p class="text-lg text-gray-700 mb-4">La respuesta correcta es:</p>
+            <p id="answerText" class="text-3xl md:text-4xl font-bold text-green-700"></p>
+          </div>
+          
+          <button id="nextQuestion" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+            ¡Siguiente Pregunta! 🚀
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ questions }}>
+    let currentTimer;
+    let usedQuestions = new Set();
+    
+    // Get random question
+    function getRandomQuestion() {
+      const allQuestions = [...questions.exercises, ...questions.problems];
+      const availableQuestions = allQuestions.filter(q => !usedQuestions.has(q.id));
+      
+      if (availableQuestions.length === 0) {
+        usedQuestions.clear();
+        return allQuestions[Math.floor(Math.random() * allQuestions.length)];
+      }
+      
+      const randomQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+      usedQuestions.add(randomQuestion.id);
+      return randomQuestion;
+    }
+    
+    // Start timer
+    function startTimer() {
+      let timeLeft = 10;
+      const timerText = document.getElementById('timerText');
+      const timerCircle = document.getElementById('timerCircle');
+      const timeWarning = document.getElementById('timeWarning');
+      const circumference = 283;
+      
+      timerText.textContent = timeLeft;
+      timerCircle.style.strokeDashoffset = '0';
+      timeWarning.classList.add('hidden');
+      
+      currentTimer = setInterval(() => {
+        timeLeft--;
+        timerText.textContent = timeLeft;
+        
+        const offset = circumference * (timeLeft / 10);
+        timerCircle.style.strokeDashoffset = offset;
+        
+        if (timeLeft <= 3) {
+          timeWarning.classList.remove('hidden');
+          timerText.className = 'text-3xl font-bold text-red-600 animate-pulse';
+        }
+        
+        if (timeLeft <= 0) {
+          clearInterval(currentTimer);
+          showAnswer();
+        }
+      }, 1000);
+    }
+    
+    // Show answer
+    function showAnswer() {
+      document.getElementById('questionPhase').classList.add('hidden');
+      document.getElementById('answerPhase').classList.remove('hidden');
+    }
+    
+    // Open modal with question
+    function openModal(boxNumber) {
+      const modal = document.getElementById('questionModal');
+      const question = getRandomQuestion();
+      
+      document.getElementById('currentBoxNumber').textContent = boxNumber;
+      document.getElementById('questionText').textContent = question.question;
+      document.getElementById('answerText').textContent = question.answer;
+      
+      // Reset modal state
+      document.getElementById('questionPhase').classList.remove('hidden');
+      document.getElementById('answerPhase').classList.add('hidden');
+      document.getElementById('timeWarning').classList.add('hidden');
+      document.getElementById('timerText').className = 'text-3xl font-bold text-red-500';
+      
+      modal.classList.remove('hidden');
+      startTimer();
+    }
+    
+    // Close modal
+    function closeModal() {
+      const modal = document.getElementById('questionModal');
+      modal.classList.add('hidden');
+      if (currentTimer) {
+        clearInterval(currentTimer);
+      }
+    }
+    
+    // Event listeners
+    document.querySelectorAll('.math-box').forEach(box => {
+      box.addEventListener('click', (e) => {
+        const boxNumber = e.currentTarget.dataset.boxNumber;
+        openModal(boxNumber);
+      });
+    });
+    
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('nextQuestion').addEventListener('click', closeModal);
+    
+    // Close modal when clicking outside
+    document.getElementById('questionModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('questionModal')) {
+        closeModal();
+      }
+    });
+  </script>
+</Layout>

@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import questionsData from '../data/questions.json';
+
+// Combinar ejercicios y problemas
+const allQuestions = [...questionsData.exercises, ...questionsData.problems];
+
+// Obtener parámetros de la URL
+const questionIndex = Astro.url.searchParams.get('index');
+const parsedIndex = questionIndex ? parseInt(questionIndex) : null;
+
+// Debug info
+const debugInfo = {
+  questionIndex,
+  parsedIndex,
+  totalQuestions: allQuestions.length,
+  url: Astro.url.href
+};
+
+let currentQuestion = null;
+if (parsedIndex !== null && parsedIndex >= 0 && parsedIndex < allQuestions.length) {
+  currentQuestion = allQuestions[parsedIndex];
+}
+---
+
+<Layout>
+  <div class="min-h-screen bg-gradient-to-br from-white via-[#009DD0]/15 via-[#7ED349]/10 to-white flex flex-col items-center justify-center p-4">
+    
+    <div class="bg-white rounded-xl p-8 shadow-lg max-w-2xl">
+      <h1 class="text-2xl font-bold text-[#009DD0] mb-4">Quiz Debug Page</h1>
+      
+      <div class="mb-6">
+        <h2 class="text-lg font-semibold mb-2">Debug Info:</h2>
+        <pre class="bg-gray-100 p-4 rounded text-sm">{JSON.stringify(debugInfo, null, 2)}</pre>
+      </div>
+
+      {currentQuestion ? (
+        <div class="mb-6">
+          <h2 class="text-lg font-semibold mb-2">Pregunta encontrada:</h2>
+          <div class="bg-[#7ED349]/10 p-4 rounded">
+            <p><strong>Tipo:</strong> {currentQuestion.type}</p>
+            <p><strong>ID:</strong> {currentQuestion.id}</p>
+            <p><strong>Pregunta:</strong> {currentQuestion.question}</p>
+            <p><strong>Respuesta:</strong> {currentQuestion.answer}</p>
+          </div>
+        </div>
+      ) : (
+        <div class="mb-6">
+          <div class="bg-red-100 p-4 rounded text-red-800">
+            No se encontró ninguna pregunta
+          </div>
+        </div>
+      )}
+
+      <a 
+        href="/" 
+        class="inline-block bg-gradient-to-r from-[#7ED349] to-[#009DD0] text-white px-6 py-3 rounded-lg hover:scale-105 transition-all duration-300"
+      >
+        ← Volver al inicio
+      </a>
+    </div>
+
+  </div>
+</Layout>
