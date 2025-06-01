@@ -6,6 +6,7 @@ export default defineConfig({
   site: 'https://andresalmeida.github.io',
   base: '/maths-program',
   output: 'static',
+  trailingSlash: 'ignore',
   vite: {
     plugins: [tailwindcss()],
   },
